@@ -108,20 +108,20 @@ docker compose run --rm --entrypoint /bin/bash codex_setup -lc '
   --sandbox workspace-write --dangerously-bypass-approvals-and-sandbox'
 ```
 
-### appendix: structure
+### structure
 
 ```mermaid
-flowchart TD
-    A[Host Machine] --> B[Docker Compose]
-    B --> C[codex_setup Container]
-    B --> D[Dev Container]
-    C --> E[/workspace/project]
-    D --> E
-    E --> F[codex-npm<br>(Codex CLI + deps)]
-    E --> G[repositories/<br>Your projects]
-    G --> H[repo1/]
-    G --> I[repo2/]
-    E --> J[.codexignore<br>(global)]
+flowchart
+    A["Host Machine"] --> B["Docker Compose"];
+    B --> C["codex_setup Container"];
+    B --> D["Dev Container"];
+    C --> E["/workspace/project"];
+    D --> E;
+    E --> F["codex-npm\n(Codex CLI + deps)"];
+    E --> G["repositories/\nYour projects"];
+    G --> H["repo1/"];
+    G --> I["repo2/"];
+    E --> J[".codexignore\n(global)"];
 ```
 
 ## License
