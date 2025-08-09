@@ -6,8 +6,12 @@ services:
     platform: linux/amd64
     working_dir: /workspace/project
     environment:
+      # lang: https://github.com/openai/codex-universal?tab=readme-ov-file#configuring-language-runtimes
       CODEX_ENV_PYTHON_VERSION: "3.12"
       CODEX_ENV_NODE_VERSION: "22"
+      # CODEX_ENV_RUST_VERSION: "1.87.0"
+      # CODEX_ENV_GO_VERSION: "1.24.3"
+      # CODEX_ENV_SWIFT_VERSION: "6.1"
     volumes:
       - ./workspace:/workspace/project:rw
     tty: true
