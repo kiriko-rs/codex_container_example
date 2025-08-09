@@ -1,0 +1,6 @@
+# workspace
+workspace/*
+!workspace/README.md
+
+# environment variables
+.env

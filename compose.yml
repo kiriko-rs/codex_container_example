@@ -1,0 +1,44 @@
+services:
+  codex_setup:
+    env_file:
+      - .env
+    image: ghcr.io/openai/codex-universal:latest
+    platform: linux/amd64
+    working_dir: /workspace/project
+    environment:
+      CODEX_ENV_PYTHON_VERSION: "3.12"
+      CODEX_ENV_NODE_VERSION: "22"
+    volumes:
+      - ./workspace:/workspace/project:rw
+    tty: true
+    stdin_open: true
+
+  codex_dev:                   # ← 以降の通常運用
+    image: ghcr.io/openai/codex-universal:latest
+    platform: linux/amd64
+    working_dir: /workspace/project
+    environment:
+      CODEX_ENV_PYTHON_VERSION: "3.12"
+      CODEX_ENV_NODE_VERSION: "20"
+      # 設定/キャッシュはHOME側へ（コードと分離）
+      HOME: "/workspace/home"
+      XDG_CACHE_HOME: "/workspace/home/.cache"
+      XDG_CONFIG_HOME: "/workspace/home/.config"
+      XDG_DATA_HOME: "/workspace/home/.local/share"
+      # （必要なら）pyenv/nvmのルートは既定に合わせて固定
+      PYENV_ROOT: "/root/.pyenv"
+      NVM_DIR: "/root/.nvm"
+      OPENAPI_API_KEY: "${OPENAI_API_KEY}"
+    volumes:
+      - ./workspace/:/workspace/project:rw
+      - ./workspace/.home:/workspace/home:rw
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /root/.cache
+      - /root/.nvm
+      - /root/.pyenv
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    tty: true
+    stdin_open: true
